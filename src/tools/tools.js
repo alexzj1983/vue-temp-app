@@ -37,8 +37,8 @@ var ajax = (function(){
 
         return function(arg){
             var fullurl = url;
-            if(localStorage.coc_token){
-                fullurl = url+'?CO_SSID_OP='+localStorage.coc_token
+            if(localStorage.token){
+                fullurl = url+'?ssid='+localStorage.token
             }
 
             var opt = {
@@ -64,50 +64,25 @@ var ajax = (function(){
                     arg.cb(data);
                 } else if(data.errCode==20001){
                     tip.err('登录失效请再次登录');
-                    delete localStorage.coc_token;
-                    delete localStorage.coc_username;
-                    arg.loginFailCb?arg.loginFailCb():null;
+                    delete localStorage.token;
+                    delete localStorage.username;
+                    if(arg.loginFailCb)arg.loginFailCb();
                     
                     var loginObj = {name:'login'};
-                    if(router.app.$root.$route.name == 'fbdetailpage'){
-                        loginObj.query = {
-                            redirect: router.app.$root.$route.fullPath
-                        }
-                    }
-
                     router.replace(loginObj);
                 } else {
                     tip.err(data.errInfo);
-                    arg.failCb?arg.failCb(data):null;
+                    if(arg.failCb)arg.failCb(data);
                 }
             }).fail(function(){
                 tip.err(!ajaxName?url:ajaxName);
-                arg.failCb?arg.failCb({errCode:30000}):null;
+                if(arg.failCb)arg.failCb();
             });
         };
     }
 
     return {
-        login:send(cfg.baseUrl+'/Api.php/Customer/login','登录'),
-        sendFeedbackEmail:send(cfg.baseUrl+'/Api.php/Customer/sendFeedbackEmail','用户反馈'),
-        getCustomerDetail:send(cfg.baseUrl+'/Api.php/Customer/getCustomerDetail','获取用户信息'),
-        changePassword:send(cfg.baseUrl+'/Api.php/Customer/changePassword','修改密码-登录状态'),
-        addEmail:send(cfg.baseUrl+'/Api.php/Customer/addEmail','添加绑定邮箱'),
-        delEmail:send(cfg.baseUrl+'/Api.php/Customer/delEmail','删除绑定邮箱 '),
-        addFeedback:send(cfg.baseUrl+'/Api.php/Customer/addFeedback','新增反馈'),
-        applyOpenFeedback:send(cfg.baseUrl+'/Api.php/Customer/applyOpenFeedback','申请开通服务'),
-        getFeedbackList:send(cfg.baseUrl+'/Api.php/Customer/getFeedbackList','获取反馈列表'),
-        getFeedbackDetail:send(cfg.baseUrl+'/Api.php/Customer/getFeedbackDetail','获取反馈详情'),
-        getFeedbackComment:send(cfg.baseUrl+'/Api.php/Customer/getFeedbackComment','获取反馈补充说明'),
-        addFeedbackComment:send(cfg.baseUrl+'/Api.php/Customer/addFeedbackComment','新增反馈补充说明'),
-        getFeedbackMaterial:send(cfg.baseUrl+'/Api.php/Customer/getFeedbackMaterial','获取资料记录'),
-        feedbackAccept:send(cfg.baseUrl+'/Api.php/Customer/feedbackAccept','验收成功'),
-        feedbackRefuse:send(cfg.baseUrl+'/Api.php/Customer/feedbackRefuse','验收失败'),
-        getMessageList:send(cfg.baseUrl+'/Api.php/Customer/getMessageList','获取消息列表'),
-        getMessageDetail:send(cfg.baseUrl+'/Api.php/Customer/getMessageDetail','获取消息详细')
-        
-        
-        
+        login:send('','登录')
     };
 })();
 

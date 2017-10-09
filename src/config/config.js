@@ -1,5 +1,5 @@
 const cfg = {
-    baseUrl:'https://co.avlsec.com/cfb'
+    baseUrl:''
 }
 
 export {cfg}
