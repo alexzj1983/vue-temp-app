@@ -3,15 +3,18 @@
         <input type="text" v-model="yyyy">
         <input type="text" v-model="mm">
         <button @click="daysList()">set mm</button>
-        
+        <label for="">123</label><input type="checkbox" name="" id="">
+        <label for="">123</label><input type="radio" name="" id="">
         <div class="date-picker-month-select">
-            {{display_yyyy}} - {{display_mm}}
+            <button><i class="fa fa-caret-left"></i></button>
+            <div class="date-picker-yyyy__mm-text">{{display_yyyy}} - {{display_mm}}</div>
+            <button><i class="fa fa-caret-right"></i></button>
         </div>
         <div class="datepicker-days-grid">
             <template v-for="(week_days,w) in days_obj_list">
                 <div class="datepicker-week-row" :key="w">
                     <template v-for="(day_obj,d) in week_days">
-                        <div class="datepicker-day-coll" :class="{'datepicker-curr__mm-days':day_obj.mm==display_mm,'datepicker-curr__dd':isCurrDay(day_obj)}" :key="d">
+                        <div class="datepicker-day-coll" :class="{'datepicker-curr__mm-days':day_obj.mm==mm,'datepicker-curr__dd':isCurrDay(day_obj)}" :key="d">
                             {{day_obj.dd}}
                         </div>
                     </template>
@@ -64,7 +67,7 @@ export default {
     },
     methods:{
         isCurrDay(date_obj){
-            return date_obj.yyyy==this.display_yyyy&&date_obj.mm==this.display_mm&&date_obj.dd==this.display_dd;
+            return date_obj.yyyy==this.display_yyyy&&date_obj.mm==this.mm&&date_obj.dd==this.display_dd;
         },
         daysList(){
             var self = this;
@@ -112,7 +115,7 @@ export default {
             var days_list = [];
             for(let i=start;i<=end;i++){
                 var yyyy = date_obj.getFullYear();
-                var mm = self.getMonth(date_obj.getMonth());
+                var mm = date_obj.getMonth();
                 days_list.push({yyyy,mm,dd:i});
             }
             return days_list;
@@ -155,6 +158,10 @@ export default {
 .datepicker-layout{
     display: inline-block;
     font-size: 0.75em;
+}
+
+.date-picker-yyyy__mm-text{
+    display: inline-block;
 }
 
 .datepicker-week-row{
