@@ -11,7 +11,7 @@
             <template v-for="(week_days,w) in days_obj_list">
                 <div class="datepicker-week-row" :key="w">
                     <template v-for="(day_obj,d) in week_days">
-                        <div class="datepicker-day-coll" :class="{'datepicker-curr__mm-day':day_obj.mm==display_mm,'datepicker-curr__dd':isCurrDay(day_obj)}" :key="d">
+                        <div class="datepicker-day-coll" :class="{'datepicker-curr__mm-days':day_obj.mm==display_mm,'datepicker-curr__dd':isCurrDay(day_obj)}" :key="d">
                             {{day_obj.dd}}
                         </div>
                     </template>
@@ -172,10 +172,10 @@ export default {
     border-radius: 4px;
 }
 
-.datepicker-day-coll.datepicker-curr__mm-day{
+.datepicker-day-coll.datepicker-curr__mm-days{
     background-color: #fff;
 }
-.datepicker-day-coll.datepicker-curr__mm-day.datepicker-curr__dd{
+.datepicker-day-coll.datepicker-curr__mm-days.datepicker-curr__dd{
     background-color: #aaa;
     color: #fff;
 }
