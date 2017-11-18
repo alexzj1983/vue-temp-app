@@ -1,19 +1,23 @@
 <template>
     <div class="mian">
-        <DatePicker></DatePicker>
+        <!-- <DatePicker></DatePicker> -->
+        <!-- <Roll></Roll> -->
+        <div v-for="(v,i) in str" :key="i">
+            {{v}}
+        </div>
     </div>
 </template>
 <script>
     import DatePicker from '../components/picker/DatePicker.vue'
-    
+    import Roll from '../components/Roll.vue'
 
     export default {
         components: {
-            DatePicker
+            DatePicker,Roll
         },
         data() {
             return {
-                
+                str:''.split(';')
             }
         },
         watch: {
